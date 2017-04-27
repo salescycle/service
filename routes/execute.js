@@ -4,15 +4,16 @@ var pool = require('../common/connection-pool')
 var getData = require('../bot/repo/get-data')
 var initialHeader = require('../bot/api/initial-header')
 var Promise = require('promise')
-
+var setHeader = require('../bot/repo/set-header')
+var processEfile = require('../bot/api/process-efiles')
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     getCrm()
         .then(processStage1And2)
-        .then(function(salesHeaderList){
-            res.send(salesHeaderList)
-        });
+        .then(processStage3)
+        .then(populateSalesHeader)
+        .then(res.send('done'));
 });
 
 function getCrm(){
@@ -44,7 +45,14 @@ function processStage1And2(crmData){
 }
 
 function processStage3(salesHeaderList){
+    return new Promise(function(resolve, reject){
+        processEfile(salesHeaderList);
+    });
+}
 
+function populateSalesHeader(salesHeaderList){
+    //console.log('salesHeaderList', salesHeaderList);
+    return setHeader(salesHeaderList);
 }
 
 module.exports = router;
