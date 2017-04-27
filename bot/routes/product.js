@@ -7,7 +7,7 @@ var pool = require('./common/connection-pool')
 router.get('/', function(req, res, next) {
     pool.getConnection(function(err, connection) {
         // Use the connection
-        connection.query('SELECT * FROM sales_header', function(error, results, fields) {
+        connection.query('SELECT * FROM product', function(error, results, fields) {
             // And done with the connection.
             res.send(results);
             connection.release();
