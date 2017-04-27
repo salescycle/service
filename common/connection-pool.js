@@ -8,4 +8,4 @@ var ConnectionPool = mysql.createPool({
     database: 'acsm_e2f8e2c1b156bb0'
 });
 
-modules.exports = ConnectionPool;
+module.exports = ConnectionPool;

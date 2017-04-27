@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
-var pool = require('./common/connection-pool')
+var pool = require('../common/connection-pool')
 
 /* GET sales list */
 router.get('/', function(req, res, next) {
