@@ -2,11 +2,11 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var pool = require('../common/connection-pool')
-
+var crm = require('../bot/repo/crm')
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-    pool.getConnection(function(err, connection) {
+    /*pool.getConnection(function(err, connection) {
         // Use the connection
         connection.query('SELECT * FROM users', function(error, results, fields) {
             // And done with the connection.
@@ -16,6 +16,10 @@ router.get('/', function(req, res, next) {
             if (error) throw error;
             // Don't use the connection here, it has been returned to the pool.
         });
+    });*/
+
+    crm().done(function(data){
+        res.send(data);
     });
 });
 
