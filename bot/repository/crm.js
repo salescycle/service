@@ -1,13 +1,10 @@
-var express = require('express');
-var router = express.Router();
 var mysql = require('mysql');
 var pool = require('./common/connection-pool')
 
-/* GET sales list */
-router.get('/', function(req, res, next) {
+var crm = {
     pool.getConnection(function(err, connection) {
         // Use the connection
-        connection.query('SELECT * FROM product', function(error, results, fields) {
+        connection.query('SELECT * FROM sales_header', function(error, results, fields) {
             // And done with the connection.
             res.send(results);
             connection.release();
@@ -16,6 +13,4 @@ router.get('/', function(req, res, next) {
             // Don't use the connection here, it has been returned to the pool.
         });
     });
-});
-
-module.exports = router;
+}
