@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var pool = require('../common/connection-pool')
-var crm = require('../bot/repo/crm')
+var crm = require('../bot/repo/get-data')
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
