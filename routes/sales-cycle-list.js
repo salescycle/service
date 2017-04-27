@@ -12,13 +12,12 @@ var connection = mysql.createConnection({
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   connection.connect();
-  connection.query('SELECT * from users', function(err, rows, fields) {
+  connection.query('SELECT * from sales_header', function(err, rows, fields) {
     if (!err)
       res.send(rows);
     else
       res.send('Error while performing Query.');
   });  
-  connection.end();
 });
 
 module.exports = router;
