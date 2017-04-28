@@ -6,12 +6,16 @@ var initialHeader = require('../bot/api/initial-header')
 var Promise = require('promise')
 var setHeader = require('../bot/repo/set-header')
 var processEfile = require('../bot/api/process-efiles')
+var processppa = require('../bot/api/process-ppa')
+var salesConstants = ('../constants/sales-constants')
+var crmDataList = null;
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     getCrm()
         .then(processStage1And2)
         .then(processStage3)
+        .then(processStage4)
         .then(populateSalesHeader)
         .then(res.send('done'));
 });
@@ -21,6 +25,7 @@ function getCrm(){
 }
 
 function processStage1And2(crmData){
+    crmDataList = crmData;
     var salesHeaderList = [];
     return new Promise(function(resolve, reject){
         crmData.forEach(function(crm) {
@@ -46,7 +51,19 @@ function processStage1And2(crmData){
 
 function processStage3(salesHeaderList){
     return new Promise(function(resolve, reject){
-        processEfile(salesHeaderList);
+        processEfile(salesHeaderList)
+            .done(function(salesHeaderList){
+                resolve(salesHeaderList);
+            });
+    });
+}
+
+function processStage4(salesHeaderList){
+    return new Promise(function(resolve, reject){
+        processppa(salesHeaderList,crmDataList)
+            .done(function(salesHeaderList){
+                resolve(salesHeaderList);
+            });
     });
 }
 

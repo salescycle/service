@@ -1,0 +1,13 @@
+module.exports = {
+    STATUS_COMPLETED : 'Y',
+    STATUS_NOT_COMPLETED : 'N',
+    STATUS_GET_MORE_DETAILS : 'D',
+    EFILES : 'EFL',
+    PPA: 'PPA',
+    TELEPHONING : 1,
+    APPROACH : 2,
+    FACTFINDING : 3,
+    PREPERATION: 4,
+    CLOSING: 5,
+    FOLLO_THROUGH: 6
+}

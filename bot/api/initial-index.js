@@ -1,7 +1,8 @@
 var initialIndex = {
     baseleid: '',
     type: '',
-    recid: ''
+    recid: '',
+    score: 0
 }
 
 module.exports = initialIndex;
