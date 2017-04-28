@@ -8,6 +8,7 @@ var setHeader = require('../bot/repo/set-header')
 var processEfile = require('../bot/api/process-efiles')
 var processppa = require('../bot/api/process-ppa')
 var processProduct = require('../bot/api/process-product')
+var processClient = require('../bot/api/process-client')
 var salesConstants = ('../constants/sales-constants')
 var crmDataList = null;
 
@@ -18,8 +19,9 @@ router.get('/', function(req, res, next) {
         .then(processStage3)
         .then(processStage4)
         .then(processStage5)
+        .then(processStage6)
         .then(populateSalesHeader)
-        .then(res.send('done'));
+        .then(res.send('Processed sales cycle'));
 });
 
 function getCrm(){
@@ -71,7 +73,16 @@ function processStage4(salesHeaderList){
 
 function processStage5(salesHeaderList){
     return new Promise(function(resolve, reject){
-        processProduct(salesHeaderList,crmDataList)
+        processProduct(salesHeaderList)
+            .done(function(salesHeaderList){
+                resolve(salesHeaderList);
+            });
+    });
+}
+
+function processStage6(salesHeaderList){
+    return new Promise(function(resolve, reject){
+        processClient(salesHeaderList)
             .done(function(salesHeaderList){
                 resolve(salesHeaderList);
             });

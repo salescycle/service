@@ -9,5 +9,5 @@ module.exports = {
     FACTFINDING : 3,
     PREPERATION: 4,
     CLOSING: 5,
-    FOLLO_THROUGH: 6
+    FOLLOW_THROUGH: 6
 }
