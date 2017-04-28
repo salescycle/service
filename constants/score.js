@@ -1,6 +1,6 @@
 module.exports = {
     LAST_NAME : 0.25,
-    FIRST_NAME : 0.05,
+    FIRST_NAME : 0.5,
     DOB	: 0.25,
     GENDER:	0.1,
     ADDRESS1:	0.25,   
