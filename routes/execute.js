@@ -7,6 +7,7 @@ var Promise = require('promise')
 var setHeader = require('../bot/repo/set-header')
 var processEfile = require('../bot/api/process-efiles')
 var processppa = require('../bot/api/process-ppa')
+var processProduct = require('../bot/api/process-product')
 var salesConstants = ('../constants/sales-constants')
 var crmDataList = null;
 
@@ -16,6 +17,7 @@ router.get('/', function(req, res, next) {
         .then(processStage1And2)
         .then(processStage3)
         .then(processStage4)
+        .then(processStage5)
         .then(populateSalesHeader)
         .then(res.send('done'));
 });
@@ -61,6 +63,15 @@ function processStage3(salesHeaderList){
 function processStage4(salesHeaderList){
     return new Promise(function(resolve, reject){
         processppa(salesHeaderList,crmDataList)
+            .done(function(salesHeaderList){
+                resolve(salesHeaderList);
+            });
+    });
+}
+
+function processStage5(salesHeaderList){
+    return new Promise(function(resolve, reject){
+        processProduct(salesHeaderList,crmDataList)
             .done(function(salesHeaderList){
                 resolve(salesHeaderList);
             });

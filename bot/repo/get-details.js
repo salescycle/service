@@ -8,7 +8,7 @@ function getDetails(type, baseleid){
          pool.getConnection(function(err, connection) {
             console.log('Type ', type);
             console.log('baseleid ', baseleid);
-            var query = (type === salesConstants.PPA) ? getPPAQuery(baseleid) : getEfilesQuery();
+            var query = (type === salesConstants.PPA) ? getPPAQuery(baseleid) : getEfilesQuery(baseleid);
             console.log('query', query);
             connection.query(query, function(error, results, fields) {
             connection.release();
@@ -48,8 +48,9 @@ function getPPAQuery(baseleid){
     
 }
 
-function getEfilesQuery(){
-    return "SELET * FROM EFILES";
+function getEfilesQuery(baseleid){
+    return "select efiles.docName, efiles.date from acsm_e2f8e2c1b156bb0.efiles efiles  "+
+            "where efiles.baseLEID = "+baseleid;
 }
 
 module.exports = {getDetails,getPlanDetails};

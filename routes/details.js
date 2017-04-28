@@ -4,14 +4,23 @@ var mysql = require('mysql');
 var pool = require('../common/connection-pool')
 var details = require('../bot/repo/get-details')
 var Promise = require('promise');
+var salesConstants = require('../constants/sales-constants')
 
 /* GET users listing. */
 router.get('/:type/:baseleid', function(req, res, next) { 
-    getDetails(req.params.type, req.params.baseleid)
+    if(req.params.type === salesConstants.PPA){
+        getDetails(req.params.type, req.params.baseleid)
         .then(getPlans)
         .then(function(detailList){
             res.send(detailList);
         });
+    }else{
+         getDetails(req.params.type, req.params.baseleid)
+        .then(function(detailList){
+            res.send(detailList);
+        });
+    }
+    
 });
 
 function getDetails(type, baseleid){
